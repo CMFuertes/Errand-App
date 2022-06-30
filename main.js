@@ -28,14 +28,15 @@ window.addEventListener('load', () =>  {
 
     DisplayTodos();
     })
+
+    DisplayTodos()
 }) 
 
 function DisplayTodos () {
     const todoList = document.querySelector('#todo-list');
+    todoList.innerHTML = "";
 
-    todoList.innerHTML = '';
-
-    todos.forEach ( todo =>  {
+    todos.forEach (todo =>  {
         const todoItem = document.createElement('div');
         todoItem.classList.add('todo-item')
 
@@ -50,7 +51,6 @@ function DisplayTodos () {
         input.type = 'checkbox';
         input.checked = todo.done;
         span.classList.add('bubble');
-
         if (todo.category == 'personal') {
             span.classList.add('personal');
         } else {
@@ -63,12 +63,12 @@ function DisplayTodos () {
         deleteButton.classList.add('delete');
 
         content.innerHTML = `<input type="text" value="${todo.conent}"
-        readonly>` ;
+        readonly>`;
         edit.innerHTML = 'Edit';
-        deleteButton.innerHTML(input);
+        deleteButton.innerHTML = 'Delete';
 
         label.appendChild(input);
-        label.appendChild(spin);
+        label.appendChild(span);
         actions.appendChild(edit);
         actions.appendChild(deleteButton);
         todoItem.appendChild(label);
@@ -81,7 +81,7 @@ function DisplayTodos () {
             todoItem.classList.add('done');
         }
 
-        input.addEventListener('click', e => {
+        input.addEventListener('change', (e) => {
             todo.done = e.target.checked;
             localStorage.setItem('todos', JSON.stringify(todos));
 
@@ -94,11 +94,11 @@ function DisplayTodos () {
             DisplayTodos();
         })
          
-        edit.addEventListener('click', e => {
-            const input = content.querySelector.apply('input');
+        edit.addEventListener('click', (e) => {
+            const input = content.querySelector('input');
             input.removeAttribute('readonly');
             input.focus();
-            input.addEventListener('blur', e => {
+            input.addEventListener('blur', (e) => {
                 input.setAttribute('readonly', true);
                 todo.conent = e.target.value;
                 localStorage.setItem('todos', JSON.stringify(todos));
@@ -107,8 +107,8 @@ function DisplayTodos () {
 
         })
 
-        deleteButton.addEventListener('click', e => {
-            todos = todos.filter(todo => t != todo);
+        deleteButton.addEventListener('click', (e) => {
+            todos = todos.filter(t => t != todo);
             localStorage.setItem('todos', JSON.stringify(todos));
             DisplayTodos();
         })
